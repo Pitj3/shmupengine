@@ -1,0 +1,12 @@
+E:\Code\CSharp\Schmup\Engine\bin\Debug\net7.0\Engine.deps.json
+E:\Code\CSharp\Schmup\Engine\bin\Debug\net7.0\Engine.dll
+E:\Code\CSharp\Schmup\Engine\bin\Debug\net7.0\Engine.pdb
+E:\Code\CSharp\Schmup\Engine\obj\Debug\net7.0\Engine.GeneratedMSBuildEditorConfig.editorconfig
+E:\Code\CSharp\Schmup\Engine\obj\Debug\net7.0\Engine.AssemblyInfoInputs.cache
+E:\Code\CSharp\Schmup\Engine\obj\Debug\net7.0\Engine.AssemblyInfo.cs
+E:\Code\CSharp\Schmup\Engine\obj\Debug\net7.0\Engine.csproj.CoreCompileInputs.cache
+E:\Code\CSharp\Schmup\Engine\obj\Debug\net7.0\Engine.dll
+E:\Code\CSharp\Schmup\Engine\obj\Debug\net7.0\refint\Engine.dll
+E:\Code\CSharp\Schmup\Engine\obj\Debug\net7.0\Engine.pdb
+E:\Code\CSharp\Schmup\Engine\obj\Debug\net7.0\ref\Engine.dll
+E:\Code\CSharp\Schmup\Engine\obj\Debug\net7.0\Engine.csproj.AssemblyReference.cache

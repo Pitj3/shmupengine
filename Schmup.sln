@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schmup", "Schmup\Schmup.csproj", "{CCEF37BF-B233-49FA-91E6-FAAF29374F96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{162D0088-90F8-43BA-936E-C53AA7D23FDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCEF37BF-B233-49FA-91E6-FAAF29374F96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCEF37BF-B233-49FA-91E6-FAAF29374F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCEF37BF-B233-49FA-91E6-FAAF29374F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCEF37BF-B233-49FA-91E6-FAAF29374F96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{162D0088-90F8-43BA-936E-C53AA7D23FDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162D0088-90F8-43BA-936E-C53AA7D23FDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162D0088-90F8-43BA-936E-C53AA7D23FDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162D0088-90F8-43BA-936E-C53AA7D23FDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74B522D4-1D9F-4AF2-95AE-F05CF5AF929F}
+	EndGlobalSection
+EndGlobal
