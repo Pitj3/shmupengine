@@ -15,6 +15,8 @@ namespace Engine.Graphics
             Graphics.GL.ActiveTexture(Silk.NET.OpenGL.GLEnum.Texture0);
             Graphics.GL.BindTexture(Silk.NET.OpenGL.GLEnum.Texture2D, ID);
 
+            StbImage.stbi_set_flip_vertically_on_load(1);
+
             ImageResult result = ImageResult.FromMemory(File.ReadAllBytes(path), ColorComponents.RedGreenBlueAlpha);
 
             Width = (uint)result.Width;
