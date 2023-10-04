@@ -16,8 +16,8 @@ namespace Engine.Graphics
             _glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGL);
             _glfw.WindowHint(WindowHintInt.ContextVersionMajor, 4);
             _glfw.WindowHint(WindowHintInt.ContextVersionMinor, 5);
-            _glfw.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Any);
-            _glfw.WindowHint(WindowHintBool.OpenGLForwardCompat, true);
+            _glfw.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Core);
+            //_glfw.WindowHint(WindowHintBool.OpenGLForwardCompat, true);
 
             Window w = new()
             {

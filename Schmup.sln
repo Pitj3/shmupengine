@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schmup", "Schmup\Schmup.csproj", "{CCEF37BF-B233-49FA-91E6-FAAF29374F96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schmup", "Schmup\Schmup.csproj", "{CCEF37BF-B233-49FA-91E6-FAAF29374F96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{162D0088-90F8-43BA-936E-C53AA7D23FDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "Engine\Engine.csproj", "{162D0088-90F8-43BA-936E-C53AA7D23FDB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{334F76A5-1711-4558-AB46-9750077D12C1}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

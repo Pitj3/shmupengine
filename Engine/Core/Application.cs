@@ -21,6 +21,10 @@ namespace Engine.Core
         public static Application? Instance { get; private set; }
 
         public IRenderer Renderer { get; private set; }
+
+        public uint Width { get; set; }
+        public uint Height { get; set; }
+        public string Title { get; set; } = "Shmup Engine";
         #endregion
 
         #region Public API
@@ -112,7 +116,7 @@ namespace Engine.Core
         internal void Initialize()
         {
             // Init platform
-            _window = Window.Create("Shump", 400, 900);
+            _window = Window.Create(Title, Width, Height);
 
             Renderer.Init();
 

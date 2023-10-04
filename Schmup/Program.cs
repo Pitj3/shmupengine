@@ -1,18 +1,26 @@
 ﻿using Engine.Core;
 using Engine.Graphics;
+using Silk.NET.Maths;
 using System.Drawing;
 
 namespace Schmup;
 
 public class SchmupGame : Application
 {
+    public Sprite? playerSprite;
+
     public SchmupGame() : base(new Renderer2D())
     {
+        Title = "Shump";
+        Width = 900;
+        Height = 900;
     }
 
     public override void OnInit()
     {
         base.OnInit();
+
+        playerSprite = new Sprite("data/ship.png");
 
         Renderer.SetBackgroundColor(Color.CornflowerBlue);
     }
@@ -26,6 +34,7 @@ public class SchmupGame : Application
     {
         base.OnRender(time);
 
+        Renderer.Submit(new RenderCommandSprite(playerSprite) { Location = new Vector2D<float>(0, 0) });
     }
 }
 
