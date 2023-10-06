@@ -1,4 +1,5 @@
-﻿using Engine.Core;
+﻿using Engine.Assets;
+using Engine.Core;
 using Engine.Graphics;
 using Silk.NET.GLFW;
 using Silk.NET.Maths;
@@ -8,9 +9,12 @@ namespace Schmup;
 
 public class SchmupGame : Application
 {
-    public Sprite? playerSprite;
-    public Vector2D<float> playerLocation = new Vector2D<float>();
+    public Sprite playerSprite;
+    public Vector2D<float> playerLocation;
     public float playerSpeed = 300;
+
+    public Sprite playerSheet;
+    public SpriteAnimation animatedPlayer;
 
     public SchmupGame() : base(new Renderer2D())
     {
@@ -23,14 +27,24 @@ public class SchmupGame : Application
     {
         base.OnInit();
 
-        playerSprite = new Sprite("data/ship.png");
+        playerSprite = AssetManager.Get<Sprite>("data/ship.png");
+        playerLocation = new Vector2D<float>(Width / 2 - playerSprite.Width / 2, Height / 2 - playerSprite.Height / 2);
 
         Renderer.SetBackgroundColor(Color.CornflowerBlue);
+
+        playerSheet = AssetManager.Get<Sprite>("data/pokimane.png");
+
+        animatedPlayer = new SpriteAnimation(playerSheet, 4, 4, 0, 0, 4, 0.1f);
     }
 
     public override void OnUpdate(GameTime time)
     {
         base.OnUpdate(time);
+
+        if(Input.IsKeyPressed(Keys.Escape))
+        {
+            Quit();
+        }
 
         Vector2D<float> direction = new Vector2D<float>();
         if(Input.IsKeyDown(Keys.W))
@@ -52,14 +66,17 @@ public class SchmupGame : Application
 
         Vector2D.Normalize(direction);
 
-        playerLocation += direction * playerSpeed * (float)time.ElapsedGametime.TotalSeconds;
+        playerLocation += direction * playerSpeed * time.Delta;
+
+        playerLocation.X = Math.Clamp(playerLocation.X, 0, Width - playerSprite.Width);
+        playerLocation.Y = Math.Clamp(playerLocation.Y, 0, Height - playerSprite.Height); 
     }
 
     public override void OnRender(GameTime time)
     {
         base.OnRender(time);
 
-        Renderer.Submit(new RenderCommandSprite(playerSprite) { Location = playerLocation });
+        Renderer.Submit(new RenderCommandAnimatedSprite(animatedPlayer) { Location = playerLocation, Scale = Vector2D<float>.One });
     }
 }
 

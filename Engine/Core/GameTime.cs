@@ -5,6 +5,8 @@
         public TimeSpan TotalGametime { get; set; }
         public TimeSpan ElapsedGametime { get; set; }
 
+        public float Delta { get { return (float)ElapsedGametime.TotalSeconds; } }
+
         public GameTime()
         {
             TotalGametime = TimeSpan.Zero;

@@ -1,5 +1,6 @@
 ﻿using Engine.Graphics;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace Engine.Core
 {
@@ -9,16 +10,18 @@ namespace Engine.Core
         private bool _disposed;
         private bool _initialized;
         private bool _isRunning;
-        private Stopwatch? _gameTimer;
-        private GameTime? _gameTime;
+        private Stopwatch _gameTimer;
+        private GameTime _gameTime;
         private TimeSpan _accumulatedElapsedTime;
         private long _previousTicks = 0;
 
-        private Window? _window;
+        private Window _window;
+
+        private FrameBuffer _frameBuffer;
         #endregion
 
         #region Public Data
-        public static Application? Instance { get; private set; }
+        public static Application Instance { get; private set; }
 
         public IRenderer Renderer { get; private set; }
 
@@ -64,6 +67,11 @@ namespace Engine.Core
 
             Renderer.Dispose();
         }
+
+        public void Quit()
+        {
+            _isRunning = false;
+        }
         #endregion
 
         #region IDisposable Implementation
@@ -83,7 +91,6 @@ namespace Engine.Core
             }
 
             _disposed = true;
-            Instance = null;
         }
 
         [DebuggerNonUserCode]
@@ -120,6 +127,8 @@ namespace Engine.Core
 
             Renderer.Init();
 
+            _frameBuffer = new FrameBuffer(Width, Height);
+
             OnInit();
             _initialized = true;
         }
@@ -137,6 +146,8 @@ namespace Engine.Core
                     _isRunning = false;
                 }
             }
+
+            Input.Poll();
 
             if (_gameTimer == null)
             {
@@ -162,14 +173,15 @@ namespace Engine.Core
         {
             AssertNotDisposed();
 
-            if (_gameTime != null && Renderer != null)
-            {
-                Renderer.BeginRender();
-                OnRender(_gameTime);
-                Renderer.EndRender();
-            }
+            _frameBuffer.Bind();
+            Renderer.BeginRender(_gameTime);
+            OnRender(_gameTime);
+            Renderer.EndRender();
+            FrameBuffer.Unbind();
 
-            _window?.SwapBuffers();
+            Renderer.RenderFullscreenQuad(_frameBuffer.ID);
+
+            _window.SwapBuffers();
         }
         #endregion
     }

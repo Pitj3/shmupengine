@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using Engine.Core;
+using System.Drawing;
 
 namespace Engine.Graphics
 {
@@ -13,10 +14,12 @@ namespace Engine.Graphics
 
         public abstract void SetBackgroundColor(Color color);
 
-        internal abstract void BeginRender();
+        internal abstract void BeginRender(GameTime time);
         internal abstract void EndRender();
 
         public abstract void Submit(IRenderCommand command);
+
+        internal abstract void RenderFullscreenQuad(uint texID);
 
         public abstract void Dispose();
     }

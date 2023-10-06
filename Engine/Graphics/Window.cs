@@ -7,7 +7,7 @@ namespace Engine.Graphics
     public class Window
     {
         internal unsafe WindowHandle* _handle;
-        internal static Glfw? _glfw;
+        internal static Glfw _glfw;
 
         public unsafe static Window Create(string name, uint width, uint height)
         {
@@ -96,7 +96,7 @@ namespace Engine.Graphics
         {
             unsafe
             {
-                _glfw?.SwapBuffers(_handle);
+                _glfw.SwapBuffers(_handle);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Engine.Graphics
         {
             unsafe
             {
-                _glfw?.PollEvents();
+                _glfw.PollEvents();
             }
         }
 
@@ -112,7 +112,7 @@ namespace Engine.Graphics
         {
             unsafe
             {
-                return _glfw?.WindowShouldClose(_handle) ?? false;
+                return _glfw.WindowShouldClose(_handle);
             }
         }
     }
