@@ -1,5 +1,7 @@
 ﻿using Engine.Assets;
 using Engine.Core;
+using Engine.Entities;
+using Engine.Entities.Components;
 using Engine.Graphics;
 using Silk.NET.GLFW;
 using Silk.NET.Maths;
@@ -10,11 +12,11 @@ namespace Schmup;
 public class SchmupGame : Application
 {
     public Sprite playerSprite;
-    public Vector2D<float> playerLocation;
-    public float playerSpeed = 300;
+    public Entity player;
 
-    public Sprite playerSheet;
-    public SpriteAnimation animatedPlayer;
+    public Sprite pokimaneSheet;
+    public SpriteAnimation pokimaneWalkUpAnimation;
+    public Entity pokimane;
 
     public SchmupGame() : base(new Renderer2D())
     {
@@ -27,14 +29,23 @@ public class SchmupGame : Application
     {
         base.OnInit();
 
-        playerSprite = AssetManager.Get<Sprite>("data/ship.png");
-        playerLocation = new Vector2D<float>(Width / 2 - playerSprite.Width / 2, Height / 2 - playerSprite.Height / 2);
-
         Renderer.SetBackgroundColor(Color.CornflowerBlue);
 
-        playerSheet = AssetManager.Get<Sprite>("data/pokimane.png");
+        playerSprite = AssetManager.Get<Sprite>("data/ship.png");
+        player = Entity.Spawn(new Vector2D<float>(Width / 2 - playerSprite.Width / 2, Height / 2 - playerSprite.Height / 2), 0.0f);
 
-        animatedPlayer = new SpriteAnimation(playerSheet, 4, 4, 0, 0, 4, 0.1f);
+        SpriteRenderer renderer = player.AddComponent<SpriteRenderer>();
+        renderer.Sprite = playerSprite;
+
+        player.AddComponent<PlayerScript>();
+
+        pokimaneSheet = AssetManager.Get<Sprite>("data/pokimane.png");
+        pokimaneWalkUpAnimation = new SpriteAnimation(pokimaneSheet, 4, 4, 0, 0, 4, 0.2f);
+
+        pokimane = Entity.Spawn(new Vector2D<float>(100, 100), 0.0f);
+
+        AnimatedSpriteRenderer animatedSpriteRenderer = pokimane.AddComponent<AnimatedSpriteRenderer>();
+        animatedSpriteRenderer.Sprite = pokimaneWalkUpAnimation;
     }
 
     public override void OnUpdate(GameTime time)
@@ -45,38 +56,11 @@ public class SchmupGame : Application
         {
             Quit();
         }
-
-        Vector2D<float> direction = new Vector2D<float>();
-        if(Input.IsKeyDown(Keys.W))
-        {
-            direction.Y = 1;
-        }
-        if (Input.IsKeyDown(Keys.S))
-        {
-            direction.Y = -1;
-        }
-        if (Input.IsKeyDown(Keys.A))
-        {
-            direction.X = -1;
-        }
-        if (Input.IsKeyDown(Keys.D))
-        {
-            direction.X = 1;
-        }
-
-        Vector2D.Normalize(direction);
-
-        playerLocation += direction * playerSpeed * time.Delta;
-
-        playerLocation.X = Math.Clamp(playerLocation.X, 0, Width - playerSprite.Width);
-        playerLocation.Y = Math.Clamp(playerLocation.Y, 0, Height - playerSprite.Height); 
     }
 
     public override void OnRender(GameTime time)
     {
         base.OnRender(time);
-
-        Renderer.Submit(new RenderCommandAnimatedSprite(animatedPlayer) { Location = playerLocation, Scale = Vector2D<float>.One });
     }
 }
 

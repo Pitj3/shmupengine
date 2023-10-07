@@ -11,6 +11,9 @@ namespace Engine.Graphics
         public Vector2D<float> Location { get; set; }
         public Vector2D<float> Scale { get; set; } = Vector2D<float>.One;
 
+        public ShaderProgram Shader = DefaultShaders.SpriteShader;
+
+
         public RenderCommandSprite(Sprite sprite)
         {
             Sprite = sprite;
@@ -22,6 +25,8 @@ namespace Engine.Graphics
         public SpriteAnimation Sprite { get; set; }
         public Vector2D<float> Location { get; set; }
         public Vector2D<float> Scale { get; set; } = Vector2D<float>.One;
+
+        public ShaderProgram Shader = DefaultShaders.AnimatedSpriteShader;
 
         public RenderCommandAnimatedSprite(SpriteAnimation sprite) 
         {
@@ -45,13 +50,9 @@ namespace Engine.Graphics
         };
 
         private VertexArray _quadVAO;
-        private ShaderProgram _spriteShader;
-        private ShaderProgram _animatedSpriteShader;
-        private ShaderProgram _screenShader;
 
         private Color _backgroundColor;
 
-        private float _currentFrameTime;
         private GameTime _time;
 
         internal override void BeginRender(GameTime time)
@@ -69,7 +70,7 @@ namespace Engine.Graphics
 
         internal override void EndRender()
         {
-            _currentFrameTime += _time.Delta;
+
         }
 
         internal override void Init()
@@ -91,16 +92,16 @@ namespace Engine.Graphics
             ShaderModule spriteVertexModule = new ShaderModule(ShaderType.VertexShader, File.ReadAllText("data/sprite_vert.glsl"));
             ShaderModule spriteFragmentModule = new ShaderModule(ShaderType.FragmentShader, File.ReadAllText("data/sprite_frag.glsl"));
 
-            _spriteShader = new ShaderProgram(spriteVertexModule, spriteFragmentModule);
+            DefaultShaders.SpriteShader = new ShaderProgram(spriteVertexModule, spriteFragmentModule);
 
             ShaderModule animatedSpriteVertexModule = new ShaderModule(ShaderType.VertexShader, File.ReadAllText("data/animated_sprite_vert.glsl"));
             ShaderModule animatedSpriteFragmentModule = new ShaderModule(ShaderType.FragmentShader, File.ReadAllText("data/animated_sprite_frag.glsl"));
 
-            _animatedSpriteShader = new ShaderProgram(animatedSpriteVertexModule, animatedSpriteFragmentModule);
+            DefaultShaders.AnimatedSpriteShader = new ShaderProgram(animatedSpriteVertexModule, animatedSpriteFragmentModule);
 
             ShaderModule screenVertexModule = new ShaderModule(ShaderType.VertexShader, File.ReadAllText("data/screen_vert.glsl"));
             ShaderModule screenFragmentModule = new ShaderModule(ShaderType.FragmentShader, File.ReadAllText("data/screen_frag.glsl"));
-            _screenShader = new ShaderProgram(screenVertexModule, screenFragmentModule);
+            DefaultShaders.ScreenShader = new ShaderProgram(screenVertexModule, screenFragmentModule);
         }
 
         public override void SetBackgroundColor(Color color)
@@ -122,6 +123,8 @@ namespace Engine.Graphics
                 Sprite sprite = spriteCommand.Sprite;
                 Vector2D<float> location = spriteCommand.Location;
                 Vector2D<float> scale = spriteCommand.Scale;
+
+                ShaderProgram _spriteShader = spriteCommand.Shader;
 
                 _spriteShader.Bind();
 
@@ -174,6 +177,8 @@ namespace Engine.Graphics
 
                 uint frame = animation.Frame;
 
+                ShaderProgram _animatedSpriteShader = animatedSpriteCommand.Shader;
+
                 _animatedSpriteShader.Bind();
 
                 _animatedSpriteShader.Set(0, "uTexture");
@@ -214,6 +219,8 @@ namespace Engine.Graphics
         {
             Graphics.GL.ClearColor(_backgroundColor);
             Graphics.GL.Clear(ClearBufferMask.ColorBufferBit);
+
+            ShaderProgram _screenShader = DefaultShaders.ScreenShader;
 
             _screenShader.Bind();
 

@@ -1,6 +1,6 @@
 ﻿using Engine.Graphics;
+using Engine.Entities;
 using System.Diagnostics;
-using System.Drawing;
 
 namespace Engine.Core
 {
@@ -28,6 +28,8 @@ namespace Engine.Core
         public uint Width { get; set; }
         public uint Height { get; set; }
         public string Title { get; set; } = "Shmup Engine";
+
+        public Scene Scene { get; private set; }
         #endregion
 
         #region Public API
@@ -35,6 +37,8 @@ namespace Engine.Core
         {
             Instance = this;
             Renderer = renderer;
+
+            Scene = new Scene();
         }
 
         ~Application()
@@ -54,6 +58,14 @@ namespace Engine.Core
             if (!_initialized)
             {
                 Initialize();
+            }
+
+            foreach (Entity e in Scene.Current.GetEntities())
+            {
+                foreach (IComponent c in e.GetComponents())
+                {
+                    c.Init();
+                }
             }
 
             _isRunning = true;
@@ -108,14 +120,29 @@ namespace Engine.Core
         #region Public Events
         public virtual void OnInit()
         {
+            
         }
 
         public virtual void OnUpdate(GameTime time)
         {
+            foreach (Entity e in Scene.Current.GetEntities())
+            {
+                foreach(IComponent c in e.GetComponents())
+                {
+                    c.Update(time);
+                }
+            }
         }
 
         public virtual void OnRender(GameTime time)
         {
+            foreach (Entity e in Scene.Current.GetEntities())
+            {
+                foreach (IComponent c in e.GetComponents())
+                {
+                    c.Render(time);
+                }
+            }
         }
         #endregion
 
